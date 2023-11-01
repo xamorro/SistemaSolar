@@ -164,7 +164,6 @@ objects.push(moon2JupiterMesh);
 
 
 
-
 // Afegim unes ajudes als objectes de l'array per veure la orientació
 objects.forEach((node) => {
   const axes = new THREE.AxesHelper();
@@ -175,6 +174,8 @@ objects.forEach((node) => {
 });
 
 
+
+ImportPumpking();
 
 
 //cridam sa funcio gir q mos rota i renderiza
@@ -187,10 +188,44 @@ function gir (time) {
   time *= 0.001;
   objects.forEach((obj) => {
     obj.rotation.y = time;
-  });  
+  }); 
+ 
+  
   renderer.render(scene,camera)
   requestAnimationFrame(gir)
 }
 
+
+
+function ImportPumpking(pumpking){
+  //Instanciem el loader de models GLTF
+  const loader = new GLTFLoader();
+
+  //Carregam el fitxer
+  loader.load(
+      //Ruta al model
+      'Models/pumpkin/scene.gltf',
+      //FUNCIONS DE CALLBACK
+      function (gltf) {
+          //Si es carrega correctament l'afegim a l'escena
+          pumpking = gltf.scene;
+          pumpking.scale.set(4, 4, 4);
+          pumpking.position.x = 0;
+          pumpking.rotation.x = -1.5;
+
+          scene.add(pumpking);
+      },
+      function (xhr) {
+          //Aquesta funció de callback es crida mentre es carrega el model
+          //i podem mostrar el progrés de càrrega
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      },
+      function (error) {
+          //callback per quan hi ha un error. El podem mostrar per consola.
+          console.error(error);
+      }
+  );
+
+}
 
 
