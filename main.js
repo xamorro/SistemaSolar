@@ -30,6 +30,7 @@ controls.enableDamping = true;
   const intensity = 3000;
   const light = new THREE.PointLight(color, intensity);
   scene.add(light);
+  
 }
 
 // array d’objectes dels quals hem d’actualitzar la rotació.
@@ -37,8 +38,8 @@ const objects = [];
  
 // emprarem una mateixa esfera `per a tots.
 const radius = 1;
-const widthSegments = 6;
-const heightSegments = 6;
+const widthSegments = 18;
+const heightSegments = 18;
 const sphereGeometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
 
 
@@ -175,8 +176,8 @@ objects.forEach((node) => {
 
 
 
+let pumpking = null;
 ImportPumpking();
-
 
 //cridam sa funcio gir q mos rota i renderiza
 gir();
@@ -197,7 +198,7 @@ function gir (time) {
 
 
 
-function ImportPumpking(pumpking){
+function ImportPumpking(){
   //Instanciem el loader de models GLTF
   const loader = new GLTFLoader();
 
@@ -209,11 +210,18 @@ function ImportPumpking(pumpking){
       function (gltf) {
           //Si es carrega correctament l'afegim a l'escena
           pumpking = gltf.scene;
-          pumpking.scale.set(4, 4, 4);
-          pumpking.position.x = 0;
-          pumpking.rotation.x = -1.5;
+          pumpking.scale.set(2.5, 2.5, 2.5);
+          pumpking.position.x = 40;
+          pumpking.rotation.x = 0;
+          
+          const light2 = new THREE.PointLight( 0xff0000, 150 );
+          light2.position.x = 40;
+          solarSystem.add(light2);
+          
+          solarSystem.add(pumpking);
+          objects.push(pumpking);
+          
 
-          scene.add(pumpking);
       },
       function (xhr) {
           //Aquesta funció de callback es crida mentre es carrega el model
