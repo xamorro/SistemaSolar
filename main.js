@@ -3,6 +3,11 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import './style.css'
 
+//Loader de models GLTF
+let loader = null
+//Loader de textures
+let textureLoader = null
+
 const scene = new THREE.Scene()
 
 const fov = 60;
@@ -35,6 +40,18 @@ const environmentMap = cubeTextureLoader.load([
 ])
 
 scene.background = environmentMap
+
+//Textures planeta roca
+
+const albedoMud = "textures/rock/textures/rock_wall_10_diff_1k.jpg"
+const normalMud = "textures/rock/textures/rock_wall_10_nor_dx_1k.jpg"
+const roughMud = "textures/rock/textures/rock_wall_10_rough_1k.jpg"
+
+var rocaGeometry = new THREE.BoxGeometry( 1, 1, 1 )
+const albedoTexture = textureLoader.load(albedoMud)
+const normalTexture = textureLoader.load(normalMud)
+
+
 
 //------------------CREAM UN PUNT DE LLUM ENMITJ-------------------------
 {
@@ -82,6 +99,7 @@ objects.push(jupiterOrbit);
 const sunMaterial = new THREE.MeshPhongMaterial({emissive: 0xFFFF00});
 const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
 sunMesh.scale.set(5, 5, 5);
+dirlight.castShadow= true;
 //Feim el sol fill de solarsystem
 solarSystem.add(sunMesh);
 //ficam es planeta dins s'array objectes que hem creat
@@ -101,10 +119,14 @@ solarSystem.add(earthMesh);
 objects.push(earthMesh);
 
 //---------------------PLANETA ROCA PBR-----------------------------
-const rocaMaterial = new THREE.MeshPhongMaterial({color: 0x2233FF, emissive: 0x112244});
-const rocaMesh = new THREE.Mesh(sphereGeometry, rocaMaterial);
+const rocaMaterial = new THREE.MeshStandardMaterial({
+  map: albedoTexture,
+  normalMap: normalTexture, 
+})
+const rocaMesh = new THREE.Mesh(rocaGeometry, rocaMaterial);
 earthOrbit.add(rocaMesh);
 
+rocaMesh.castShadow = true;
 rocaMesh.scale.set(5, 5, 5);
 rocaMesh.position.x = 19;
 rocaMesh.position.z = 30;
