@@ -23,11 +23,23 @@ document.body.appendChild( renderer.domElement )
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true;
 
+////////ENTORN/////////////////
+const cubeTextureLoader = new THREE.CubeTextureLoader()
+const environmentMap = cubeTextureLoader.load([
+  'textures/environmentMaps/galaxia/px.png',
+  'textures/environmentMaps/galaxia/nx.png',
+  'textures/environmentMaps/galaxia/py.png',
+  'textures/environmentMaps/galaxia/ny.png',
+  'textures/environmentMaps/galaxia/pz.png',
+  'textures/environmentMaps/galaxia/nz.png'
+])
+
+scene.background = environmentMap
 
 //------------------CREAM UN PUNT DE LLUM ENMITJ-------------------------
 {
   const color = 0xFFFFFF;
-  const intensity = 3000;
+  const intensity = 2000;
   const light = new THREE.PointLight(color, intensity);
   scene.add(light);
   
@@ -87,6 +99,20 @@ earthMesh.position.x = 10;
 solarSystem.add(earthMesh);
 //ficam es planeta dins s'array objectes que hem creat
 objects.push(earthMesh);
+
+//---------------------PLANETA ROCA PBR-----------------------------
+const rocaMaterial = new THREE.MeshPhongMaterial({color: 0x2233FF, emissive: 0x112244});
+const rocaMesh = new THREE.Mesh(sphereGeometry, rocaMaterial);
+earthOrbit.add(rocaMesh);
+
+rocaMesh.scale.set(5, 5, 5);
+rocaMesh.position.x = 19;
+rocaMesh.position.z = 30;
+
+//Feim el planeta fill de solarsystem
+solarSystem.add(rocaMesh);
+//ficam es planeta dins s'array objectes que hem creat
+objects.push(rocaMesh);
 
 
 //---------------------PLANETA MARS-----------------------------
@@ -174,6 +200,17 @@ objects.forEach((node) => {
   node.add(axes);
 });
 
+  
+  //plane
+  const planeGeo = new THREE.PlaneGeometry(120, 120)
+  const planeMat = new THREE.MeshStandardMaterial({
+    color: 0xffffff
+  })
+  const plane = new THREE.Mesh(planeGeo, planeMat)
+  plane.receiveShadow= true
+  plane.position.y = -6
+  plane.rotation.x = Math.PI * -0.5
+  scene.add(plane)
 
 
 let pumpking = null;
