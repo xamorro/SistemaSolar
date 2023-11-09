@@ -6,7 +6,6 @@ import './style.css'
 //Loader de models GLTF
 let loader = null
 //Loader de textures
-let textureLoader = null
 
 const scene = new THREE.Scene()
 
@@ -18,7 +17,7 @@ const far = 1000;
 
 //---------------------CAMERA CONTROL----------------------
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-camera.position.set(0,100,0)
+camera.position.set(0,120,0)
 camera.lookAt(new THREE.Vector3(0,0,0))
 
 const renderer = new THREE.WebGLRenderer()
@@ -42,15 +41,16 @@ const environmentMap = cubeTextureLoader.load([
 scene.background = environmentMap
 
 //Textures planeta roca
+const textureLoader = new THREE.TextureLoader()
 
 const albedoMud = "textures/rock/textures/rock_wall_10_diff_1k.jpg"
 const normalMud = "textures/rock/textures/rock_wall_10_nor_dx_1k.jpg"
 const roughMud = "textures/rock/textures/rock_wall_10_rough_1k.jpg"
 
-var rocaGeometry = new THREE.BoxGeometry( 1, 1, 1 )
+
 const albedoTexture = textureLoader.load(albedoMud)
 const normalTexture = textureLoader.load(normalMud)
-
+const roughTexture = textureLoader.load(roughMud)
 
 
 //------------------CREAM UN PUNT DE LLUM ENMITJ-------------------------
@@ -99,7 +99,6 @@ objects.push(jupiterOrbit);
 const sunMaterial = new THREE.MeshPhongMaterial({emissive: 0xFFFF00});
 const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
 sunMesh.scale.set(5, 5, 5);
-dirlight.castShadow= true;
 //Feim el sol fill de solarsystem
 solarSystem.add(sunMesh);
 //ficam es planeta dins s'array objectes que hem creat
@@ -122,8 +121,9 @@ objects.push(earthMesh);
 const rocaMaterial = new THREE.MeshStandardMaterial({
   map: albedoTexture,
   normalMap: normalTexture, 
+  roughnessMap: roughTexture
 })
-const rocaMesh = new THREE.Mesh(rocaGeometry, rocaMaterial);
+const rocaMesh = new THREE.Mesh(sphereGeometry, rocaMaterial);
 earthOrbit.add(rocaMesh);
 
 rocaMesh.castShadow = true;
@@ -247,7 +247,7 @@ gir();
 function gir (time) {
   time *= 0.001;
   objects.forEach((obj) => {
-    obj.rotation.y = time;
+  obj.rotation.y = time;
   }); 
  
   
