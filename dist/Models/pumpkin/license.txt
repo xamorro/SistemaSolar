@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pumpkin
+* source:	https://sketchfab.com/3d-models/pumpkin-bf5e44b703ea40579f99e3cc036d603d
+* author:	Tiago Lopes (https://sketchfab.com/drobluda)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pumpkin" (https://sketchfab.com/3d-models/pumpkin-bf5e44b703ea40579f99e3cc036d603d) by Tiago Lopes (https://sketchfab.com/drobluda) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

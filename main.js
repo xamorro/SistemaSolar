@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import gsap from "gsap"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import './style.css'
@@ -359,6 +360,10 @@ function ImportPumpking(){
       }
   );
 
-}
+  // window.addEventListener('resize',() =>{
+  //     renderer.setSize(window.innerWidth, window.innerHeight)
+  //     camera.aspect()
 
+  // })
+}
 
